@@ -48,7 +48,7 @@ function composeEmail(email, subject, message, message2) {
 async function clickComposeButton() {
     const composeButton = document.querySelector('div[role="button"][jsaction="click:dlrqf; clickmod:dlrqf"]');
     if (composeButton) {
-        const spreadsheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSONf7s0KLtlJavZGuHYXxs79fM1ElXdOyhj84tc-PyKc0MMV0N1BFgCq_V1ZgDBN8nBCKlELkDn9KE/pubhtml?gid=0&single=true';
+        const spreadsheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSONf7s0KLtlJavZGuHYXxs79fM1ElXdOyhj84tc-PyKc0MMV0N1BFgCq_V1ZgDBN8nBCKlELkDn9KE/pubhtml';
         let columnsToExtract = [1, 2, 3, 4]; 
         let rowsToExtract = [1]; 
 
@@ -71,7 +71,7 @@ async function clickComposeButton() {
                         await new Promise((resolve) => {
                             setTimeout(() => {
                             resolve();
-                            }, 5000);
+                            }, 2000);
                         });
 
 
@@ -86,6 +86,11 @@ async function clickComposeButton() {
                             console.log(message);
 
                             await composeEmail(email, subject, message, message2);
+                            await new Promise((resolve) => {
+                                setTimeout(() => {
+                                resolve();
+                                }, 2000);
+                            });
                         }
                     }
                 }
