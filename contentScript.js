@@ -16,7 +16,7 @@ function composeEmail(email, subject, message, message2) {
         divElement.insertBefore(extraSpace2, newText2.nextSibling);
         const linkElement = document.createElement("a");
         linkElement.textContent = "Resume_Junith";
-        linkElement.href = "https://drive.google.com/file/d/1Sj4baoWqohTFjdczYRxPlwb6ab_ywlbb/view?usp=drive_link";
+        linkElement.href = "https://drive.google.com/file/d/1s4C6YjtJ5qvTha2Zo0AyV1rLazQJ8rkH/view";
         first.insertAdjacentElement('afterend',linkElement)
         const extraSpace3 = document.createElement("br");
         const extraSpace4 = document.createElement("br");
@@ -80,7 +80,7 @@ async function clickComposeButton() {
                             company_name = row[columnsToExtract[1]].textContent;
                             person_name = row[columnsToExtract[2]].textContent;
                             message = `Hello ${person_name},`
-                            message2 = `I'm Junith, an Undergrad at IIIT, and I'm really into Software Development. I love this field because I believe it offers a lot of opportunities for learning, and I'm a hands-on learner -- I learn best by doing things. I'm good with React.js, Node.js and Databases. That's why I'm reaching out to you for an internship which soon could be converted to a Full Time Opportunity based on my performance at ${company_name} -- I'm attaching my Resume here for you to have a look at it. I believe I'd be a great fit, and I'd love to chat more about how I can help ${company_name}.`
+                            message2 = `I'm Junith, an Undergrad at IIIT, and I'm really into Software Development. I love this field because I believe it offers a lot of opportunities for learning, and I'm a hands-on learner -- I learn best by doing things. I'm good with React.js, Node.js and Multiple Databases such as MySQL, MongoDB. That's why I'm reaching out to you for an internship which soon could be converted to a Full Time Opportunity or the Software Engineer role based on my performance at ${company_name} -- I'm attaching my Resume here for you to have a look at it. I believe I'd be a great fit, and I'd love to chat more about how I can help ${company_name}.`
                             console.log(email);
                             console.log(subject);
                             console.log(message);
