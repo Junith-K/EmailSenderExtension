@@ -1,29 +1,43 @@
-function composeEmail(email, subject, message, message2) {
+function composeEmail(email, subject, person_name, company_name) {
     return new Promise((resolve)=> {
         document.querySelector('input.agP.aFw').value = email
         document.querySelector('input[name="subjectbox"]').value = subject
         const divElement = document.querySelector('div.Am.Al.editable.LW-avf.tS-tW')
-        const first = divElement.firstChild;
-        const gapLineBreak = document.createElement("br");
-        const newText1 = document.createTextNode(message);
-        const newText2 = document.createTextNode(message2);
-        divElement.insertBefore(newText1, first);
-        divElement.insertBefore(gapLineBreak, newText1.nextSibling);
-        const extraSpace1 = document.createElement("br");
-        divElement.insertBefore(extraSpace1, gapLineBreak.nextSibling);
-        divElement.insertBefore(newText2, extraSpace1.nextSibling);
-        const extraSpace2 = document.createElement("br");
-        divElement.insertBefore(extraSpace2, newText2.nextSibling);
-        const linkElement = document.createElement("a");
-        linkElement.textContent = "Resume_Junith";
-        linkElement.href = "https://drive.google.com/file/d/1s4C6YjtJ5qvTha2Zo0AyV1rLazQJ8rkH/view";
-        first.insertAdjacentElement('afterend',linkElement)
-        const extraSpace3 = document.createElement("br");
-        const extraSpace4 = document.createElement("br");
-        divElement.insertBefore(extraSpace3, linkElement.nextSibling);
-        divElement.insertBefore(extraSpace4, linkElement.nextSibling);
-        const newText3 = document.createTextNode("Thanks & Regards");
-        divElement.insertBefore(newText3, extraSpace3.nextSibling);
+        const signatureDiv = divElement.querySelector('#mt-signature');
+
+        if (signatureDiv) {
+            divElement.removeChild(signatureDiv);
+        }
+
+        //referral
+        // divElement.innerHTML = `
+        //     <p>Hello ${person_name},</p>
+        //     <p>I hope this email finds you well. I am excited to share that I am applying for the 2024 Software Engineer Intern position at ${company_name}, and I would greatly appreciate your support in providing a referral.</p>
+        //     <p>With previous internships under my belt, I've gained practical experience in software engineering and am eager to further develop my skills. I also worked on a project called Scrollon, a user-friendly full-stack social media site (you can check it out at <a href="https://scrollon-6fuj.onrender.com/">Website</a>). Your referral would mean a lot and help me continue to grow as a software engineer.
+        //     <p>Thank you for considering my request, and I look forward to your positive response.</p>
+        //     <a href="https://drive.google.com/file/d/1LQoGXfPWFCU4vheV0o5_58vwmJVwFnQd/view">Resume_Junith</a>
+        //     <br>
+        //     <a href="https://careers.bloomberg.com/job/detail/118748?el=Students+and+Recent+Graduates&el=Internships">Job_Link</a>
+        //     <br>
+        //     <p>Thanks & Regards</p>
+        // `;
+
+        divElement.innerHTML = `
+        <p>Dear ${person_name},</p>
+        
+        <p>I hope this email finds you well. I am writing to express my interest in a software engineer intern position at ${company_name}. I am currently a student at IIIT, set to graduate in 2024, and I'm eager to apply my software engineering skills and knowledge in a practical setting.</p>
+        
+        <p>With prior internship experiences and a keen understanding of software engineering principles, I am confident in my ability to contribute effectively to your team. I have also developed a full-stack social media site called Scrollon, which you can explore at this link: <a href="https://scrollon-6fuj.onrender.com/">Scrollon Project</a>.</p>
+        
+        <p>I am enthusiastic about the opportunity to join your team and learn from experienced professionals while contributing to meaningful projects. I look forward to the possibility of becoming a part of your organization and further discussing how I can be a valuable asset.</p>
+        
+        <p>Thank you for considering my application.</p>
+        
+        <a href="https://drive.google.com/file/d/1LQoGXfPWFCU4vheV0o5_58vwmJVwFnQd/view">Resume_Junith</a>
+
+        <br>
+
+        <p>Warm regards,<br>Junith</p>`;
         const divElement1 = document.querySelector('.T-I.J-J5-Ji.aoO.v7.T-I-atl.L3');
         divElement1.addEventListener('click', function onClick(){
             divElement1.removeEventListener('click', onClick);
@@ -50,7 +64,6 @@ async function clickComposeButton() {
     if (composeButton) {
         const spreadsheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSONf7s0KLtlJavZGuHYXxs79fM1ElXdOyhj84tc-PyKc0MMV0N1BFgCq_V1ZgDBN8nBCKlELkDn9KE/pubhtml';
         let columnsToExtract = [1, 2, 3, 4]; 
-        let rowsToExtract = [1]; 
 
         fetch(spreadsheetURL)
             .then(response => response.text())
@@ -58,8 +71,9 @@ async function clickComposeButton() {
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = data;
                 const table = tempDiv.querySelector('table');
-                let email, message, message2, company_name, person_name;
-                let subject = "Regarding Software Engineer Internship Opportunities";
+                let email, company_name, person_name;
+                // let subject = "Regarding Software Engineer Internship Referral";  //referral
+                let subject = "Inquiring About Software Engineer Internship Position";  //hr
         
                 for (let i = 1; i < table.rows.length; i++) {
                     const row = table.rows[i].cells;
@@ -67,11 +81,10 @@ async function clickComposeButton() {
                     if(row[columnsToExtract[3]].textContent=="no"){
                         composeButton.click();
 
-                        // Introduce a delay of 5 seconds
                         await new Promise((resolve) => {
                             setTimeout(() => {
                             resolve();
-                            }, 2000);
+                            }, 1000);
                         });
 
 
@@ -79,17 +92,12 @@ async function clickComposeButton() {
                             email = row[columnsToExtract[0]].textContent;
                             company_name = row[columnsToExtract[1]].textContent;
                             person_name = row[columnsToExtract[2]].textContent;
-                            message = `Hello ${person_name},`
-                            message2 = `I'm Junith, an Undergrad at IIIT, and I'm really into Software Development. I love this field because I believe it offers a lot of opportunities for learning, and I'm a hands-on learner -- I learn best by doing things. I'm good with React.js, Node.js and Multiple Databases such as MySQL, MongoDB. That's why I'm reaching out to you for an internship which soon could be converted to a Full Time Opportunity or the Software Engineer role based on my performance at ${company_name} -- I'm attaching my Resume here for you to have a look at it. I believe I'd be a great fit, and I'd love to chat more about how I can help ${company_name}.`
-                            console.log(email);
-                            console.log(subject);
-                            console.log(message);
 
-                            await composeEmail(email, subject, message, message2);
+                            await composeEmail(email, subject, person_name, company_name);
                             await new Promise((resolve) => {
                                 setTimeout(() => {
                                 resolve();
-                                }, 2000);
+                                }, 1000);
                             });
                         }
                     }
